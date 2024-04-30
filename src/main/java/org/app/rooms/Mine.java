@@ -1,4 +1,4 @@
-package org.app.mine;
+package org.app.rooms;
 import org.app.valuables.Valuable;
 import org.app.valuables.Diamond;
 import org.app.valuables.Gold;

@@ -1,17 +1,17 @@
 package org.app;
 
-import org.app.deposit.Deposit;
-import org.app.valuableTransporter.Transporter;
-import org.app.guardsMan.GuardsMan;
-import org.app.door.TreasureRoomDoor;
-import org.app.accountant.Accountant;
-import org.app.king.King;
-import org.app.miner.Miner;
-import org.app.mine.Mine;
-import org.app.treasureRoom.Room; // Assuming this is the concrete implementation
+import org.app.rooms.Deposit;
+import org.app.actors.Transporter;
+import org.app.actors.GuardsMan;
+import org.app.rooms.TreasureRoomDoor;
+import org.app.actors.Accountant;
+import org.app.actors.King;
+import org.app.actors.Miner;
+import org.app.rooms.Mine;
+import org.app.rooms.Room; // Assuming this is the concrete implementation
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Deposit deposit = new Deposit();
         Mine mine = new Mine();
         TreasureRoomDoor actualTreasureRoom = new Room();
@@ -26,5 +26,8 @@ public class Main {
 
         new Thread(theKing, "King").start();
         new Thread(accountant, "Accountant").start();
+
+        Thread.sleep(10000); // Sleep for 10 seconds
     }
 }
+

@@ -1,4 +1,4 @@
-package org.app.treasureRoom;
+package org.app.rooms;
 
 
 import org.app.valuables.Valuable;
@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import org.app.door.TreasureRoomDoor;
 
 public class Room implements TreasureRoomDoor {
 
@@ -21,7 +20,7 @@ public class Room implements TreasureRoomDoor {
         writeLock.lock();
         try {
             valuables.add(valuable);
-            System.out.println("Valuable added: " + valuable.getName());
+            System.out.println("Valuable added to treasure room: " + valuable.getName());
         } finally {
             writeLock.unlock();
         }

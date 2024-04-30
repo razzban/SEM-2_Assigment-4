@@ -1,4 +1,4 @@
-package org.app.door;
+package org.app.rooms;
 
 import org.app.valuables.Valuable;
 

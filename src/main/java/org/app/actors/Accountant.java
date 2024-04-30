@@ -1,6 +1,6 @@
-package org.app.accountant;
+package org.app.actors;
 
-import org.app.door.TreasureRoomDoor;
+import org.app.rooms.TreasureRoomDoor;
 import org.app.logger.Logger;
 import org.app.valuables.Valuable;
 

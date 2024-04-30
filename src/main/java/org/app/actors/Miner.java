@@ -1,6 +1,6 @@
-package org.app.miner;
-import org.app.deposit.Deposit;
-import org.app.mine.Mine;
+package org.app.actors;
+import org.app.rooms.Deposit;
+import org.app.rooms.Mine;
 import org.app.valuables.Valuable;
 
 import org.app.logger.Logger;
@@ -21,7 +21,7 @@ public class Miner implements Runnable {
                 Valuable valuable = mine.getValuable();
                 if (valuable != null) {
                     deposit.add(valuable);
-                    Logger.getInstance().log("Mined and deposited: " + valuable.getName() + " worth " + valuable.getValue());
+                    Logger.getInstance().log("Mined and deposited in deposit box: " + valuable.getName() + " worth " + valuable.getValue());
                 } else {
                     Logger.getInstance().log("No valuable found or mine exhausted.");
                 }

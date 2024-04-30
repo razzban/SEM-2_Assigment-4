@@ -1,7 +1,7 @@
-package org.app.guardsMan;
+package org.app.actors;
 
 import org.app.valuables.Valuable;
-import org.app.door.TreasureRoomDoor;
+import org.app.rooms.TreasureRoomDoor;
 import java.util.logging.Logger;
 
 public class GuardsMan implements TreasureRoomDoor {

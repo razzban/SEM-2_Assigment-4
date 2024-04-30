@@ -1,21 +1,23 @@
 package org.app.testing;
-import java.util.ArrayList;
+import java.util.Objects;
 
-
-public class MyArrayListTest<T> implements MyArrayList<T> {
+public class MyArrayListqueueTest<T> implements MyArrayListqueue<T> {
     private T[] elements;
     private int size;
     private static final int DEFAULT_CAPACITY = 10;
 
-    public MyArrayListTest() {
+    public MyArrayListqueueTest() {
         elements = (T[]) new Object[DEFAULT_CAPACITY];
         size = 0;
     }
 
     @Override
     public void add(int index, T element) {
+        if (element == null) {
+            throw new IllegalArgumentException("Null elements are not allowed");
+        }
         if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
         if (size == elements.length) {
             resize();
@@ -27,6 +29,9 @@ public class MyArrayListTest<T> implements MyArrayList<T> {
 
     @Override
     public void add(T element) {
+        if (element == null) {
+            throw new IllegalArgumentException("Null elements are not allowed");
+        }
         if (size == elements.length) {
             resize();
         }
@@ -35,8 +40,11 @@ public class MyArrayListTest<T> implements MyArrayList<T> {
 
     @Override
     public void set(int index, T element) {
+        if (element == null) {
+            throw new IllegalArgumentException("Null elements are not allowed");
+        }
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
         elements[index] = element;
     }
@@ -44,7 +52,7 @@ public class MyArrayListTest<T> implements MyArrayList<T> {
     @Override
     public T get(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
         return elements[index];
     }
@@ -52,13 +60,10 @@ public class MyArrayListTest<T> implements MyArrayList<T> {
     @Override
     public T remove(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
         T element = elements[index];
-        int numMoved = size - index - 1;
-        if (numMoved > 0) {
-            System.arraycopy(elements, index + 1, elements, index, numMoved);
-        }
+        System.arraycopy(elements, index + 1, elements, index, size - index - 1);
         elements[--size] = null; // prevent memory leak
         return element;
     }
@@ -66,17 +71,17 @@ public class MyArrayListTest<T> implements MyArrayList<T> {
     @Override
     public T remove(T element) {
         for (int i = 0; i < size; i++) {
-            if (element.equals(elements[i])) {
+            if (Objects.equals(element, elements[i])) {
                 return remove(i);
             }
         }
-        throw new IllegalStateException("Element not found");
+        throw new IllegalStateException("Element not found: " + element);
     }
 
     @Override
     public int indexOf(T element) {
         for (int i = 0; i < size; i++) {
-            if (element.equals(elements[i])) {
+            if (Objects.equals(element, elements[i])) {
                 return i;
             }
         }

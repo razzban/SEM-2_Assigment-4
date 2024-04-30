@@ -1,6 +1,6 @@
-package org.app.valuableTransporter;
-import org.app.deposit.Deposit;
-import org.app.door.TreasureRoomDoor;
+package org.app.actors;
+import org.app.rooms.Deposit;
+import org.app.rooms.TreasureRoomDoor;
 import org.app.logger.Logger;
 import org.app.valuables.Valuable;
 
@@ -32,7 +32,7 @@ public class Transporter implements Runnable {
                         if (valuable != null) {
                             transportBag.add(valuable);
                             value += valuable.getValue();
-                            Logger.getInstance().log("Picked: " + valuable.getName() + " worth " + valuable.getValue());
+                            Logger.getInstance().log(" Transporter Picked: " + valuable.getName() + " worth " + valuable.getValue());
                         }
                     } catch (Exception e) {
                         Logger.getInstance().log(e.getMessage());
@@ -44,7 +44,7 @@ public class Transporter implements Runnable {
                     try {
                         for (Valuable v : transportBag) {
                             treasureRoom.add(v);
-                            Logger.getInstance().log("Delivered: " + v.getName());
+                            Logger.getInstance().log("Transporter Delivered to Treasure Room: " + v.getName());
                         }
                     } finally {
                         treasureRoom.releaseWrite();

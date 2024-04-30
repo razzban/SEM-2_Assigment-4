@@ -1,4 +1,4 @@
-package org.app.deposit;
+package org.app.rooms;
 
 import org.app.logger.Logger;
 import org.app.valuables.Valuable;
@@ -25,7 +25,7 @@ public class Deposit {
                 logger.log("Wooden Coin detected, discarded.");
             } else {
                 list.add(valuable);
-                logger.log(valuable.getName() + " deposited.");
+                logger.log(valuable.getName() + " Valuables deposited in deposit box.");
             }
         }
     }
@@ -38,7 +38,7 @@ public class Deposit {
                 return null;
             }
             Valuable valuable = list.remove(0);
-            logger.log(valuable.getName() + " removed from the deposit.");
+            logger.log(valuable.getName() + " Valuable removed from the deposit.");
             return valuable;
         }
     }
@@ -47,7 +47,9 @@ public class Deposit {
     public Valuable peek() {
         synchronized (list) {
             return list.isEmpty() ? null : list.get(0);
+
         }
+
     }
 
     // Returns the current size of the deposit
