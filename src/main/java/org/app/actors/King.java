@@ -12,9 +12,12 @@ public class King implements Runnable {
     private Random random = new Random();
     private TreasureRoomDoor treasureRoomDoor;
     private boolean canKingParty = false;
+    private static final double PARTY_COST = 500.0; // Define the cost of the party
+    private Transporter transporter; // Add a reference to the Transporter
 
-    public King(TreasureRoomDoor treasureRoomDoor) {
+    public King(TreasureRoomDoor treasureRoomDoor, Transporter transporter) {
         this.treasureRoomDoor = treasureRoomDoor;
+        this.transporter = transporter; // Initialize the Transporter
     }
 
     @Override
@@ -22,9 +25,9 @@ public class King implements Runnable {
         while (true) {
             try {
                 // Random value to decide if the king can throw a party
-                double targetValue = random.nextInt(100) + 50;
+                double targetValue = random.nextInt(50) + 25;
                 checkForParty(targetValue);
-                Thread.sleep(10000);
+                Thread.sleep(random.nextInt(5000) + 1000); // Sleep for a random time between 1 and 6 seconds
             } catch (InterruptedException e) {
                 Logger.getInstance().log("King was interrupted: " + e.getMessage());
                 return;  // Properly handle thread interruption
@@ -32,26 +35,17 @@ public class King implements Runnable {
         }
     }
 
-    private void checkForParty(double targetValue) {
-        double accumulatedValue = 0;
-        List<Valuable> temp = new ArrayList<>();
 
-        treasureRoomDoor.acquireWrite();
-        try {
-            while (accumulatedValue < targetValue) {
-                try {
-                    Valuable valuable = treasureRoomDoor.retrieve();
-                    accumulatedValue += valuable.getValue();
-                    temp.add(valuable);
-                } catch (Exception e) {
-                    Logger.getInstance().log("No more valuables to retrieve: " + e.getMessage());
-                    returnValuables(temp);
-                    return;
-                }
-            }
-            canKingParty = true;
-        } finally {
-            treasureRoomDoor.releaseWrite();
+    private void checkForParty(double targetValue) {
+        Random random = new Random();
+        int randomNum = random.nextInt(10); // Generate a random number between 0 and 9
+
+        // The King will party if the random number is less than 7, making the party frequent
+        canKingParty = transporter.getTransferCount() >= 1 && randomNum < 7;
+
+        Logger.getInstance().log("Transporter transfer count: " + transporter.getTransferCount());
+        if (canKingParty) {
+            double accumulatedValue = PARTY_COST; // Subtract the cost of the party
         }
 
         if (canKingParty) {

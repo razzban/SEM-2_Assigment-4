@@ -25,7 +25,7 @@ public class Miner implements Runnable {
                 } else {
                     Logger.getInstance().log("No valuable found or mine exhausted.");
                 }
-                Thread.sleep(1000);  // Configurable delay
+                Thread.sleep(3000);  // Configurable delay
             } catch (Exception e) { // Catching a general exception to handle unexpected issues.
                 Logger.getInstance().log("Error in mining process: " + e.getMessage());
                 // Optionally sleep or handle the specific error if needed

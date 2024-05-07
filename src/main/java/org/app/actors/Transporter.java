@@ -12,6 +12,7 @@ public class Transporter implements Runnable {
     private Deposit deposit;
     private List<Valuable> transportBag;
     private TreasureRoomDoor treasureRoom;
+    private int transferCount = 0; // Add a counter for the number of transfers
 
     public Transporter(Deposit deposit, TreasureRoomDoor treasureRoom) {
         this.deposit = deposit;
@@ -23,8 +24,8 @@ public class Transporter implements Runnable {
     public void run() {
         try {
             while (!Thread.currentThread().isInterrupted()) {
-                while (deposit.size() < 10) { // Wait until there are 10 items in the deposit
-                    Thread.sleep(1000); // Sleep for 1 second
+                while (deposit.size() < 3) { // Wait until there are 3 items in the deposit
+                    Thread.sleep(2000); // Sleep for 2 seconds
                 }
                 while (!deposit.isEmpty() && !Thread.currentThread().isInterrupted()) {
                     try {
@@ -39,24 +40,34 @@ public class Transporter implements Runnable {
                     }
                 }
                 if (!transportBag.isEmpty()) {
+                    Logger.getInstance().log("Transporter trying to acquire write access...");
                     treasureRoom.acquireWrite();
                     try {
+                        Logger.getInstance().log("Transporter acquired write access.");
                         for (Valuable v : transportBag) {
                             treasureRoom.add(v);
                             Logger.getInstance().log("Transporter Delivered to Treasure Room: " + v.getName());
                         }
+                        transferCount++; // Increment the counter each time valuables are transferred
+                        Logger.getInstance().log("Transporter transfer count: " + transferCount);
                     } catch (Exception e) {
                         Logger.getInstance().log("Exception in Transporter while delivering: " + e.getMessage());
                     } finally {
                         treasureRoom.releaseWrite();
+                        Logger.getInstance().log("Transporter released write access.");
                         transportBag.clear();
                     }
                 }
-                Thread.sleep(3000); // Wait before next transport
+                Thread.sleep(4000); // Wait for 4 seconds before next transport
             }
         } catch (InterruptedException e) {
             Logger.getInstance().log("Transporter interrupted: " + e.getMessage());
             Thread.currentThread().interrupt();
         }
+    }
+
+    // Add a method to get the current count of transfers
+    public int getTransferCount() {
+        return transferCount;
     }
 }

@@ -18,7 +18,8 @@ public class Main {
         Mine mine = new Mine();
         TreasureRoomDoor actualTreasureRoom = new org.app.rooms.TreasureRoom();
         TreasureRoomDoor treasureRoomDoor = new GuardsMan(actualTreasureRoom); // Decorate with GuardsMan
-        King theKing = new King(treasureRoomDoor);
+        Transporter transporter = new Transporter(deposit, treasureRoomDoor); // Create the Transporter
+        King theKing = new King(treasureRoomDoor, transporter); // Pass the Transporter to the King
         Accountant accountant = new Accountant(treasureRoomDoor);
 
         List<Thread> threads = new ArrayList<>();
@@ -29,7 +30,7 @@ public class Main {
             threads.add(minerThread);
         }
 
-        Thread transporterThread = new Thread(new Transporter(deposit, treasureRoomDoor), "Transporter");
+        Thread transporterThread = new Thread(transporter, "Transporter");
         transporterThread.start();
         threads.add(transporterThread);
 
@@ -40,14 +41,13 @@ public class Main {
         Thread accountantThread = new Thread(accountant, "Accountant");
         accountantThread.start();
         threads.add(accountantThread);
-
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             for (Thread thread : threads) {
                 thread.interrupt();
             }
         }));
 
-        Thread.sleep(10000); // Sleep for 10 seconds
+        Thread.sleep(30000); // Sleep for 10 seconds
 
         System.out.println("Total deposited value: " + deposit.getTotalDepositedValue());
     }

@@ -4,11 +4,12 @@ import org.app.rooms.TreasureRoomDoor;
 import org.app.logger.Logger;
 import org.app.valuables.Valuable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Accountant implements Runnable {
     private TreasureRoomDoor treasureRoomDoor;
-    private volatile boolean running = true; // Flag to control the running of the thread
+    private volatile boolean running = true;
 
     public Accountant(TreasureRoomDoor treasureRoomDoor) {
         this.treasureRoomDoor = treasureRoomDoor;
@@ -21,6 +22,9 @@ public class Accountant implements Runnable {
                 treasureRoomDoor.acquireRead();
                 try {
                     List<Valuable> valuables = treasureRoomDoor.readValuables(); // Assuming this returns a List
+                    if (valuables == null) {
+                        valuables = new ArrayList<>(); // Initialize valuables to an empty list if it's null
+                    }
                     logValuables(valuables); // Log the details of the valuables
                 } finally {
                     treasureRoomDoor.releaseRead();
