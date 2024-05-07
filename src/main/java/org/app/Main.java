@@ -48,5 +48,7 @@ public class Main {
         }));
 
         Thread.sleep(10000); // Sleep for 10 seconds
+
+        System.out.println("Total deposited value: " + deposit.getTotalDepositedValue());
     }
 }

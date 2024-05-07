@@ -1,4 +1,5 @@
 package org.app.actors;
+
 import org.app.rooms.Deposit;
 import org.app.rooms.TreasureRoomDoor;
 import org.app.logger.Logger;
@@ -6,11 +7,9 @@ import org.app.valuables.Valuable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Transporter implements Runnable {
     private Deposit deposit;
-    private Random randomGenerator = new Random();
     private List<Valuable> transportBag;
     private TreasureRoomDoor treasureRoom;
 
@@ -24,18 +23,18 @@ public class Transporter implements Runnable {
     public void run() {
         try {
             while (!Thread.currentThread().isInterrupted()) {
-                double random = randomGenerator.nextInt(150) + 50;  // Target value to collect
-                double value = 0;
-                while (value < random && !Thread.currentThread().isInterrupted()) {
+                while (deposit.size() < 10) { // Wait until there are 10 items in the deposit
+                    Thread.sleep(1000); // Sleep for 1 second
+                }
+                while (!deposit.isEmpty() && !Thread.currentThread().isInterrupted()) {
                     try {
-                        Valuable valuable = deposit.remove();  // Assuming remove is blocking/waiting
+                        Valuable valuable = deposit.remove();
                         if (valuable != null) {
                             transportBag.add(valuable);
-                            value += valuable.getValue();
-                            Logger.getInstance().log(" Transporter Picked: " + valuable.getName() + " worth " + valuable.getValue());
+                            Logger.getInstance().log("Transporter Picked: " + valuable.getName() + " worth " + valuable.getValue());
                         }
                     } catch (Exception e) {
-                        Logger.getInstance().log(e.getMessage());
+                        Logger.getInstance().log("Exception in Transporter while picking: " + e.getMessage());
                         break;
                     }
                 }
@@ -46,6 +45,8 @@ public class Transporter implements Runnable {
                             treasureRoom.add(v);
                             Logger.getInstance().log("Transporter Delivered to Treasure Room: " + v.getName());
                         }
+                    } catch (Exception e) {
+                        Logger.getInstance().log("Exception in Transporter while delivering: " + e.getMessage());
                     } finally {
                         treasureRoom.releaseWrite();
                         transportBag.clear();

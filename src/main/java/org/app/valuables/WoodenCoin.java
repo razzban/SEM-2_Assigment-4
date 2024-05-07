@@ -2,7 +2,7 @@ package org.app.valuables;
 
 public class WoodenCoin extends ValuableMultiton implements Valuable {
     private static final String name = "Wooden Coin";
-    private static final double value = 50.0;
+    private static final double value = 0.0;
 
     private WoodenCoin() {}
 

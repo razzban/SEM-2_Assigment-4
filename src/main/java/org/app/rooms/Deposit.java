@@ -10,6 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Deposit {
     private final BlockingQueue<Valuable> queue;
     private final Logger logger;
+    private int totalDepositedValue = 0;
 
     public Deposit() {
         queue = new LinkedBlockingQueue<>();
@@ -22,6 +23,7 @@ public class Deposit {
         } else {
             queue.put(valuable);
             logger.logDeposit(valuable);
+            totalDepositedValue += valuable.getValue(); // assuming Valuable has a getValue() method
         }
     }
 
@@ -37,5 +39,13 @@ public class Deposit {
 
     public boolean isEmpty() {
         return queue.isEmpty();
+    }
+
+    public int getTotalDepositedValue() {
+        return totalDepositedValue;
+    }
+
+    public int size() {
+        return queue.size();
     }
 }
