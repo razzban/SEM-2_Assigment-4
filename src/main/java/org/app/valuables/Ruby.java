@@ -6,7 +6,7 @@ public class Ruby extends ValuableMultiton implements Valuable {
 
     private Ruby() {}
 
-    public static Valuable getInstance() {
+    public static Valuable getInstance(String ruby, double v) {
         return ValuableMultiton.getInstance(name, new Ruby());
     }
 

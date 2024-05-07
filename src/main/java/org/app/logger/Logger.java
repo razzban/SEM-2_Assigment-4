@@ -1,5 +1,7 @@
 package org.app.logger;
 
+import org.app.valuables.Valuable;
+
 public class Logger {
     private static volatile Logger instance;  // Volatile to ensure visibility of changes across threads
 
@@ -16,23 +18,27 @@ public class Logger {
         return instance;
     }
 
-    // Example method to support different levels of logging
-    public void log(String message) {
-        log(message, "INFO");
+    public void logDeposit(Valuable valuable) {
+        log(valuable.getName() + " Valuables deposited in deposit box.", "INFO");
     }
 
-    public void error(String message) {
-        log(message, "ERROR");
+    public void logRemoval(Valuable valuable) {
+        log(valuable.getName() + " Valuable removed from the deposit.", "INFO");
     }
 
-    public void warn(String message) {
-        log(message, "WARN");
+    public void logEmptyRemoval() {
+        log("Attempt to remove from an empty deposit.", "WARN");
     }
 
-    // General log method that handles all types of logs
+    public void logWoodenCoinDiscard() {
+        log("Wooden Coin detected, discarded.", "INFO");
+    }
+
     private synchronized void log(String message, String level) {
-        // Synchronization is used here minimally for the actual log output
         System.out.println(level + ": " + message);
     }
-}
 
+    public void log(String s) {
+        log(s, "INFO");
+    }
+}

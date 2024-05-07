@@ -6,7 +6,7 @@ public class Gold extends ValuableMultiton implements Valuable {
 
     private Gold() {}
 
-    public static Valuable getInstance() {
+    public static Valuable getInstance(String gold, double v) {
         return ValuableMultiton.getInstance(name, new Gold());
     }
 

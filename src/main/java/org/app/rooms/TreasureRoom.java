@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class Room implements TreasureRoomDoor {
+public class TreasureRoom implements TreasureRoomDoor {
 
     private final List<Valuable> valuables = new ArrayList<>();
     private final ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
@@ -50,7 +50,7 @@ public class Room implements TreasureRoomDoor {
         } finally {
             readLock.unlock();
         }
-        return null;
+        return valuables;
     }
 
     @Override

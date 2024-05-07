@@ -6,7 +6,7 @@ public class WoodenCoin extends ValuableMultiton implements Valuable {
 
     private WoodenCoin() {}
 
-    public static Valuable getInstance() {
+    public static Valuable getInstance(String woodenCoin, double v) {
         return ValuableMultiton.getInstance(name, new WoodenCoin());
     }
 

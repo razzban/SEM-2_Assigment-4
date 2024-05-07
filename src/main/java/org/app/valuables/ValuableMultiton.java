@@ -12,7 +12,7 @@ public class ValuableMultiton {
     // Protected constructor to prevent instantiation outside subclass
     protected ValuableMultiton() {}
 
-    protected static Valuable getInstance(String key, Valuable instance) {
+    public static Valuable getInstance(String key, Valuable instance) {
         instances.putIfAbsent(key, instance);
         return instances.get(key);
     }

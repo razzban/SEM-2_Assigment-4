@@ -1,14 +1,24 @@
 package org.app.valuables;
 
 
-public class Diamond extends ValuableMultiton implements Valuable {
-    private static final String name = "Diamond";
-    private static final double value = 500.0;
 
-    private Diamond() {}
 
-    public static Valuable getInstance() {
-        return ValuableMultiton.getInstance(name, new Diamond());
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Diamond implements Valuable {
+    private static final Map<String, Diamond> instances = new ConcurrentHashMap<>();
+
+    private final String name;
+    private final double value;
+
+    private Diamond(String name, double value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    public static Valuable getInstance(String name, double value) {
+        return instances.computeIfAbsent(name, k -> new Diamond(name, value));
     }
 
     @Override

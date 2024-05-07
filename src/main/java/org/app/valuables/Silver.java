@@ -6,7 +6,7 @@ public class Silver extends ValuableMultiton implements Valuable {
 
     private Silver() {}
 
-    public static Valuable getInstance() {
+    public static Valuable getInstance(String silver, double v) {
         return ValuableMultiton.getInstance(name, new Silver());
     }
 
